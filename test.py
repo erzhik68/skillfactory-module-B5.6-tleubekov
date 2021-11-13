@@ -46,13 +46,35 @@ def check_table(text="Продолжаем играть дальше!"):
         time.sleep(2)
 
 def input_data(s, name_player):
-    player = (input("Введите координаты \"" + s + "\" через пробел, играет " + name_player + ": ")).strip()
-    x = int(player[0])
-    y = int(player[-1])
-    if arr[x + 1][y + 1] == "-":
-        arr[x + 1][y + 1] = s
-    print_table()
-    check_table()
+    while True:
+        player = (input("Введите координаты \"" + s + "\" через пробел, играет " + name_player + ": ")).strip()
+        if player[0].isdigit():
+            if int(player[0]) or int(player[0]) == 0:
+                x = int(player[0])
+            else:
+                print("Введите число от 0 до 2 включительно! Скорее всего ввели отрицательное число")
+                continue
+        else:
+            print("Введите число от 0 до 2 включительно! Скорее всего ввели не цифру!")
+            continue
+        if player[-1].isdigit():
+            if int(player[-1]) or int(player[-1]) == 0:
+                y = int(player[-1])
+            else:
+                print("Введите число от 0 до 2 включительно! Скорее всего ввели отрицательное число")
+                continue
+        else:
+            print("Введите число от 0 до 2 включительно! Скорее всего ввели не цифру!")
+            continue
+        if not(0 <= x < 3 and 0 <= y < 3):
+            print("Вы ввели неправильные координаты! Координаты лежат в диапозоне от 0 до 2 включительно!")
+            continue
+        if arr[x + 1][y + 1] == "-":
+            arr[x + 1][y + 1] = s
+            break
+        else:
+            print("Данная позиция уже занята!")
+            continue
 
 check_table("Начинаем игру!")
 print("***********************")
@@ -60,8 +82,12 @@ print_table()
 
 while True:
     input_data("X", "игрок №1")
+    print_table()
+    check_table()
     if res == "Победитель игрок №1! " or res == "Победитель игрок №2! " or res == "Ничья! ":
         break
     input_data("O", "игрок №2")
+    print_table()
+    check_table()
     if res == "Победитель игрок №1! " or res == "Победитель игрок №2! " or res == "Ничья! ":
         break
